@@ -7,7 +7,7 @@ version: "3.5"
 services:
   shibboleth-sp:
     build: ./image/
-    image: abesesr/docker-shibboleth-renater-sp:1.0.1
+    image: abesesr/docker-shibboleth-renater-sp:1.0.2
     ports:
       - 443:443
     environment:

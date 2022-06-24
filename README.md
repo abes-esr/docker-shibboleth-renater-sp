@@ -71,7 +71,7 @@ docker-compose up
 
 Vous pouvez alors vous baser sur le [docker-compose.yml exemple](https://github.com/abes-esr/docker-shibboleth-renater-sp/blob/main/docker-compose.yml) pour l'intégrer dans votre application. A noter que la dernière version disponible de l'image est la suivante :
 ```bash
-docker pull abesesr/docker-shibboleth-renater-sp:1.0.0
+docker pull abesesr/docker-shibboleth-renater-sp:1.0.2
 ```
 
 ## Développements

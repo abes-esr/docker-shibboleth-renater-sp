@@ -28,24 +28,24 @@
                   consistentAddress="true" handlerURL="/Shibboleth.sso"
                   checkAddress="false" handlerSSL="true" cookieProps="https">
 
-            <!-- Nous mettons ici en place une relation de fédération 
+            <!-- Nous mettons ici en place une relation de fédération
                  (cf https://services.renater.fr/federation/outils/service-de-decouverte/index)
                  le SP ira demandé au DS a quel IdP faut il déléguer l'authentification -->
-            <!-- RENATER_SP_TEST_OR_PROD=TEST BEGIN -->
-            <SSO discoveryProtocol="SAMLDS" discoveryURL="https://discovery.renater.fr/test"> 
+            <!-- WAYF_RENATER_SP_TEST_OR_PROD=TEST BEGIN -->
+            <SSO discoveryProtocol="SAMLDS" discoveryURL="https://discovery.renater.fr/test">
               SAML2
             </SSO>
-            <!-- RENATER_SP_TEST_OR_PROD=TEST END -->
-            <!-- RENATER_SP_TEST_OR_PROD=PROD BEGIN --><!--
-            <SSO discoveryProtocol="SAMLDS" discoveryURL="https://discovery.renater.fr/renater"> 
+            <!-- WAYF_RENATER_SP_TEST_OR_PROD=TEST END -->
+            <!-- WAYF_RENATER_SP_TEST_OR_PROD=PROD BEGIN --><!--
+            <SSO discoveryProtocol="SAMLDS" discoveryURL="https://discovery.renater.fr/renater">
               SAML2
             </SSO>
-            --><!-- RENATER_SP_TEST_OR_PROD=PROD END -->
+            --><!-- WAYF_RENATER_SP_TEST_OR_PROD=PROD END -->
 
 
             <!-- Nous mettons ici en place une relation bilatérale :
                  le SP ira toujours déléguer l'authentification à votre IDP -->
-<!-- 
+<!--
             <SSO entityID="https://monposte.fr/idp/shibboleth">
               SAML2
             </SSO>
@@ -53,7 +53,7 @@
 
             <!-- Extension service that generates "approximate" metadata based on SP configuration. -->
             <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
-            
+
             <!-- Route for debugging user attributs -->
             <Handler type="Session" Location="/Session" showAttributeValues="true"/>
 
@@ -99,6 +99,12 @@
               <MetadataFilter type="Signature" certificate="renater-metadata-signing-cert-2016.pem"/>
             </MetadataProvider>
             --><!-- RENATER_SP_TEST_OR_PROD=PROD END -->
+
+            <!-- RENATER_SP_MDQ BEGIN --><!--
+            <MetadataProvider type="MDQ" cacheDirectory="fer" baseUrl="https://replaceme/mdq">
+            --><!-- RENATER_SP_MDQ END -->
+
+
 
             <!-- Metadonnées de TestShib https://www.testshib.org/configure.html
                  (ATTENTION: ne pas activer en prod) -->

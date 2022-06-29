@@ -24,13 +24,41 @@ if [ -z ${RENATER_SP_HTTPD_PROTECTED_PROXY_TO} ]; then echo "Error: RENATER_SP_H
 cp -f /etc/shibboleth/shibboleth2.orig.xml /etc/shibboleth/shibboleth2.xml
 sed -i "s#https://replaceme/sp#${RENATER_SP_ENTITY_ID}#" /etc/shibboleth/shibboleth2.xml
 sed -i "s#admin@replace.me#${RENATER_SP_ADMIN_MAIL}#" /etc/shibboleth/shibboleth2.xml
-if [ "$RENATER_SP_TEST_OR_PROD" = "PROD" ]; then
+## METADATA Mgt
+if [ "$RENATER_SP_USE_MDQ" = "0" ]; then
+	if [ "$RENATER_SP_TEST_OR_PROD" = "PROD" ]; then
+		# comment the TEST blocs
+		sed -i 's#<!-- RENATER_SP_TEST_OR_PROD=TEST BEGIN -->#<!-- RENATER_SP_TEST_OR_PROD=TEST BEGIN --><!--#g' /etc/shibboleth/shibboleth2.xml
+		sed -i 's#<!-- RENATER_SP_TEST_OR_PROD=TEST END -->#--><!-- RENATER_SP_TEST_OR_PROD=TEST END -->#g' /etc/shibboleth/shibboleth2.xml
+		# uncomment the PROD blocs
+		sed -i 's#<!-- RENATER_SP_TEST_OR_PROD=PROD BEGIN --><!--#<!-- RENATER_SP_TEST_OR_PROD=PROD BEGIN -->#g' /etc/shibboleth/shibboleth2.xml
+		sed -i 's#--><!-- RENATER_SP_TEST_OR_PROD=PROD END -->#<!-- RENATER_SP_TEST_OR_PROD=PROD END -->#g' /etc/shibboleth/shibboleth2.xml
+	else
+		if [ "$RENATER_SP_TEST_OR_PROD" != "TEST" ]; then
+			echo "Error: RENATER_SP_TEST_OR_PROD value must be set to TEST ou PROD (your current value is '$RENATER_SP_TEST_OR_PROD')"
+			exit 1
+		fi
+	fi
+else
+	# Use MDQ
 	# comment the TEST blocs
 	sed -i 's#<!-- RENATER_SP_TEST_OR_PROD=TEST BEGIN -->#<!-- RENATER_SP_TEST_OR_PROD=TEST BEGIN --><!--#g' /etc/shibboleth/shibboleth2.xml
 	sed -i 's#<!-- RENATER_SP_TEST_OR_PROD=TEST END -->#--><!-- RENATER_SP_TEST_OR_PROD=TEST END -->#g' /etc/shibboleth/shibboleth2.xml
+	# uncomment MDQ blocks
+	sed -i 's#<!-- RENATER_SP_MDQ BEGIN --><!--#<!-- RENATER_SP_MDQ BEGIN -->#g' /etc/shibboleth/shibboleth2.xml
+	sed -i 's#--><!-- RENATER_SP_MDQ END -->#<!-- RENATER_SP_MDQ END -->#g' /etc/shibboleth/shibboleth2.xml
+	# set MDQ server URL
+	sed -i "s#https://replaceme/mdq#${RENATER_SP_MDQ_URL}#" /etc/shibboleth/shibboleth2.xml
+fi
+
+## WAYF Mgt
+if [ "$RENATER_SP_TEST_OR_PROD" = "PROD" ]; then
+	# comment the TEST blocs
+	sed -i 's#<!-- WAYF_RENATER_SP_TEST_OR_PROD=TEST BEGIN -->#<!-- WAYF_RENATER_SP_TEST_OR_PROD=TEST BEGIN --><!--#g' /etc/shibboleth/shibboleth2.xml
+	sed -i 's#<!-- WAYF_RENATER_SP_TEST_OR_PROD=TEST END -->#--><!-- WAYF_RENATER_SP_TEST_OR_PROD=TEST END -->#g' /etc/shibboleth/shibboleth2.xml
 	# uncomment the PROD blocs
-	sed -i 's#<!-- RENATER_SP_TEST_OR_PROD=PROD BEGIN --><!--#<!-- RENATER_SP_TEST_OR_PROD=PROD BEGIN -->#g' /etc/shibboleth/shibboleth2.xml
-	sed -i 's#--><!-- RENATER_SP_TEST_OR_PROD=PROD END -->#<!-- RENATER_SP_TEST_OR_PROD=PROD END -->#g' /etc/shibboleth/shibboleth2.xml
+	sed -i 's#<!-- WAYF_RENATER_SP_TEST_OR_PROD=PROD BEGIN --><!--#<!-- WAYF_RENATER_SP_TEST_OR_PROD=PROD BEGIN -->#g' /etc/shibboleth/shibboleth2.xml
+	sed -i 's#--><!-- WAYF_RENATER_SP_TEST_OR_PROD=PROD END -->#<!-- WAYF_RENATER_SP_TEST_OR_PROD=PROD END -->#g' /etc/shibboleth/shibboleth2.xml
 else
 	if [ "$RENATER_SP_TEST_OR_PROD" != "TEST" ]; then
 		echo "Error: RENATER_SP_TEST_OR_PROD value must be set to TEST ou PROD (your current value is '$RENATER_SP_TEST_OR_PROD')"
@@ -49,7 +77,7 @@ echo "Starting shibd daemon... (could be long because of metadata download stuff
 #   from the Dockerfile is not working.
 {
 tail -f /var/log/shibboleth/shibd.log 		>> /proc/1/fd/1 ;
-tail -f /var/log/shibboleth/shibd_warn.log 	>> /proc/1/fd/2 ; 
+tail -f /var/log/shibboleth/shibd_warn.log 	>> /proc/1/fd/2 ;
 tail -f /var/log/shibboleth/transaction.log >> /proc/1/fd/1 ;
 tail -f /var/log/shibboleth/signature.log 	>> /proc/1/fd/1
 } &

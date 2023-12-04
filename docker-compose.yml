@@ -12,7 +12,12 @@ services:
     ports:
       - 443:443
     volumes:
-      - ./volume/httpd-vhosts.inc.conf:/usr/local/apache2/conf/extra/httpd-vhosts.inc.conf
+      - type: bind
+        source: ./volume/httpd-vhosts.inc.conf
+        target: /usr/local/apache2/conf/extra/httpd-vhosts.inc.conf
+      - type: bind
+        source: ./volume/access-rotated.log
+        target: /var/log/apache2/access-rotated.log
     environment:
       # container parameters, values comming from .env
       # (see .env-dist example)

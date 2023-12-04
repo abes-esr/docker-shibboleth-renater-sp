@@ -36,6 +36,7 @@ COPY ./shibboleth/ /etc/shibboleth/
 # redirect apache logs to docker stdout/stderr
 RUN ln -sf /proc/1/fd/1 /var/log/apache2/access.log
 RUN ln -sf /proc/1/fd/2 /var/log/apache2/error.log
+RUN touch /var/log/apache2/access-rotated.log
 
 # creates the entrypoint of this container
 COPY ./httpd-foreground /usr/local/bin/

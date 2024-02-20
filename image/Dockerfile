@@ -1,4 +1,4 @@
-FROM httpd:2.4.54
+FROM httpd:2.4.58
 
 # apache2: to have the apache web server able to authenticate and to reverse proxy the real application
 # libapache2-mod-shib: to have mod_shib for apache and the shibd daemon
@@ -28,7 +28,8 @@ RUN sed -i \
 # apache conf and shib config
 # (templates in order to be able to customize it fro external parameters)
 COPY ./httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf.orig
-RUN touch /usr/local/apache2/conf/extra/httpd-vhosts.inc.conf
+RUN touch /usr/local/apache2/conf/extra/httpd-vhosts-begin.inc.conf
+RUN touch /usr/local/apache2/conf/extra/httpd-vhosts-end.inc.conf
 RUN touch /usr/local/apache2/conf/extra/httpd-vhosts.public_proxy.inc.conf
 RUN touch /usr/local/apache2/conf/extra/httpd-vhosts.protected_proxy.inc.conf
 COPY ./shibboleth/ /etc/shibboleth/

@@ -20,14 +20,12 @@ Technologies : cette image docker utilise un serveur apache (basée sur son imag
 
 ### Configuration
 
-Pour configurer le conteneur, vous devez lui passer des variables d'environnement, pour cela vous pouvez créer un fichier ``.env`` à coté de votre ``docker-compose.yml`` en prenant exemple sur [``.env-dist``](./.env-dist) qui propose des exemples de valeurs en expliquant leur signification.
-
-Votre ``docker-compose.yml`` doit alors transmettre ces variables au conteneur en les précisant dans la section [``environment`` comme dans cet exemple](https://github.com/abes-esr/docker-shibboleth-renater-sp/blob/0fdb9619c4e4b8bb2f50dfda1f93c4a1d65df4bb/docker-compose.yml#L13-L23).
+Pour configurer le conteneur, vous devez lui passer des variables d'environnement, pour cela vous pouvez créer un fichier ``.env`` à coté de votre ``docker-compose.yml`` en prenant exemple sur les variables d'environnement du [``docker-compose.yml``](./docker-compose.yml) qui propose des exemples de valeurs en expliquant leur signification.
 
 Si vous souhaitez injecter des configurations apache spécifiques dans la configuration du serveur apache, vous pouvez ajouter des fichiers de configuration via des volumes aux endroits suivants dans le conteneur :
-- ``/usr/local/apache2/conf/extra/httpd-vhosts.inc.conf`` : pour injecter de la configuration au niveau global du virtualhost ([ici exactement](./image/httpd-vhosts.conf#L38-L39))
-- ``/usr/local/apache2/conf/extra/httpd-vhosts.public_proxy.inc.conf`` : pour injecter de la configuration au niveau du ProxyPass des URL publiques ([ici exactement](./image/httpd-vhosts.conf#L44))
-- ``/usr/local/apache2/conf/extra/httpd-vhosts.protected_proxy.inc.conf`` : pour injecter de la configuration au niveau du ProxyPass des URL protégées ([ici exactement](./image/httpd-vhosts.conf#L71))
+- ``/usr/local/apache2/conf/extra/httpd-vhosts-begin.inc.conf`` et ``/usr/local/apache2/conf/extra/httpd-vhosts-end.inc.conf`` : pour injecter de la configuration au niveau global du virtualhost ([ici](./image/httpd-vhosts.conf#L53-L53)) et ([ici](./image/httpd-vhosts.conf#L109-L110)) 
+- ``/usr/local/apache2/conf/extra/httpd-vhosts.public_proxy.inc.conf`` : pour injecter de la configuration au niveau du ProxyPass des URL publiques ([ici exactement](./image/httpd-vhosts.conf#L59))
+- ``/usr/local/apache2/conf/extra/httpd-vhosts.protected_proxy.inc.conf`` : pour injecter de la configuration au niveau du ProxyPass des URL protégées ([ici exactement](./image/httpd-vhosts.conf#L91))
 
 
 ### Configuration en TEST

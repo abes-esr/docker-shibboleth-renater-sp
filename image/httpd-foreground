@@ -12,7 +12,7 @@ export RENATER_SP_HTTPD_LOG_LEVEL=${RENATER_SP_HTTPD_LOG_LEVEL:='info ssl:warn'}
 export RENATER_SP_HTTPD_LOG_FORMAT=${RENATER_SP_HTTPD_LOG_FORMAT:='%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"'}
 export RENATER_SP_HTTPD_PROXYPASS_DISABLEREUSE=${RENATER_SP_HTTPD_PROXYPASS_DISABLEREUSE:='on'}
 
-for i in 0 1 2 3 4 5 6 7 8 9
+for i in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
 do
 	varname="RENATER_SP_HTTPD_PUBLIC_PATH_${i}" && export RENATER_SP_HTTPD_PUBLIC_PATH_${i}="${!varname}"
 	varname="RENATER_SP_HTTPD_PUBLIC_PATH_${i}" && export RENATER_SP_HTTPD_PUBLIC_PATH_${i}="${!varname}"
@@ -59,6 +59,17 @@ if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_6} ]; then  sed -i 's#^.*RENATER_SP_HTTPD
 if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_7} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_7.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_8} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_8.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_9} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_9.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_10} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_10.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_11} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_11.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_12} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_12.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_13} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_13.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_14} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_14.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_15} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_15.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_16} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_16.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_17} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_17.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_18} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_18.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_19} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_19.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+
 if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_1} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_1.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_2} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_2.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_3} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_3.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
@@ -68,6 +79,16 @@ if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_6} ]; then  sed -i 's#^.*RENATER_SP_HT
 if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_7} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_7.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_8} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_8.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_9} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_9.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_10} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_10.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_11} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_11.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_12} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_12.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_13} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_13.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_14} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_14.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_15} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_15.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_16} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_16.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_17} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_17.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_18} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_18.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_19} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_19.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 
 
 

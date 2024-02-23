@@ -112,6 +112,12 @@ else
 	fi
 fi
 
+# adjust some rights for SSL certificates to avoid such errors
+# ERROR OpenSSL : error code: 2147483661 in ../crypto/bio/bss_file.c, line 297
+# ERROR OpenSSL : error data: calling fopen(/etc/shibboleth/ssl/server-demo.key, r)
+# ERROR OpenSSL : error code: 268959746 in ../crypto/bio/bss_file.c, line 300
+chmod a+x /etc/shibboleth/ssl/
+chmod a+r /etc/shibboleth/ssl/*
 
 # shibd is a mandatory daemon, and it must run into the same container as apache
 # (bad practice for docker but it seams not possible to split it into 2 separated containers)

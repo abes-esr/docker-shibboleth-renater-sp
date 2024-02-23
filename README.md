@@ -64,7 +64,7 @@ Si vous souhaitez injecter des configurations apache spécifiques dans la config
 
 Vous pouvez vous baser sur le [docker-compose.yml exemple](https://github.com/abes-esr/docker-shibboleth-renater-sp/blob/main/docker-compose.yml) pour l'intégrer dans votre application comme un reverse proxy applicatif. A noter que la dernière version disponible de l'image est la suivante :
 ```bash
-docker pull abesesr/docker-shibboleth-renater-sp:2.0.0
+docker pull abesesr/docker-shibboleth-renater-sp:2.0.1
 ```
 
 ## Développements

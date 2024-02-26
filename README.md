@@ -61,9 +61,9 @@ Si vous souhaitez injecter des configurations apache spécifiques dans la config
 
 #### Port 443 et certificat SSL auto-signé
 
-Le serveur apache du conteneur docker-shibboleth-renater-sp écoute sur le 433 en HTTPS mais en utilisant un [certificat SSL auto-signé](https://github.com/abes-esr/docker-shibboleth-renater-sp/blob/f07137eb54e5155f14d0e7266ee921deaf620ab8/image/httpd-vhosts.conf#L31-L36). Ce paramétrage est une contrainte de mod_shib qui a besoin que le serveur apache écoute en HTTPS et pas en HTTP.
+Le serveur apache du conteneur docker-shibboleth-renater-sp écoute sur le 433 en HTTPS mais utilise un [certificat SSL auto-signé](https://github.com/abes-esr/docker-shibboleth-renater-sp/blob/f07137eb54e5155f14d0e7266ee921deaf620ab8/image/httpd-vhosts.conf#L31-L36). Ce paramétrage est une contrainte de mod_shib qui a besoin que le serveur apache écoute en HTTPS et pas en HTTP.
 
-En effet, HTTP pourrait être théoriquement plus intéressant dans le cadre d'une architecture avec deux reverse proxy : un premier (RP d'entreprise) qui gère les URL publiques en HTTPS, puis un second (ce conteneur) qui gère les URL interne d'une application. Dans ce type de configuration, il est nécessaire de configurer le premier reverse proxy pour qu'il puisse accepter les certificats ssl auto-signés. Voici un exemple de configuration avec un serveur apache :
+En effet, HTTP pourrait être théoriquement plus intéressant dans le cadre d'une architecture avec deux reverse proxy : un premier (RP d'entreprise) qui gère les URL publiques en HTTPS, puis un second (ce conteneur) qui gère les URL interne d'une application. Dans ce type de configuration pour que le HTTPS auto-signé fonctionne, il est nécessaire de configurer le premier reverse proxy pour qu'il puisse accepter les certificats ssl auto-signés. Voici un exemple de configuration avec un serveur apache :
 ```apache
 SSLProxyEngine on
 SSLProxyVerify none

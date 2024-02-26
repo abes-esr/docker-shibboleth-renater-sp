@@ -28,7 +28,7 @@ Si vous souhaitez injecter des configurations apache spécifiques dans la config
 - ``/usr/local/apache2/conf/extra/httpd-vhosts.protected_proxy.inc.conf`` : pour injecter de la configuration au niveau du ProxyPass des URL protégées ([ici exactement](./image/httpd-vhosts.conf#L91))
 
 
-### Configuration en TEST
+#### Configuration en TEST
 
 1) Vous avez uniquement besoin de personnaliser les valeurs du ``.env`` (cf section ci-dessus) en précisant ``RENATER_SP_TEST_OR_PROD="TEST"``, puis vous pouvez lancer votre conteneur puis consulter l'URL https://votre-ip/Shibboleth.sso/Metadata pour récupérer les métadonnées attendue dans l'étape 2 par le guichet RENATER.
 
@@ -36,7 +36,7 @@ Si vous souhaitez injecter des configurations apache spécifiques dans la config
 
 3) Vous pouvez alors tester votre fournisseur de service en naviguant sur l'URL suivante : https://votre-ip/my-protected-url/ (adapter en fonction de la valeur de ``RENATER_SP_HTTPD_PROTECTED_PATH``)
 
-### Configuration en PROD
+#### Configuration en PROD
 
 1) Vous avez besoin de personnaliser les valeurs du ``.env`` (cf section ci-dessus) en précisant ``RENATER_SP_TEST_OR_PROD="PROD"``
 
@@ -58,6 +58,19 @@ Si vous souhaitez injecter des configurations apache spécifiques dans la config
 5) Vous devez ensuite enregistrer votre fournisseur de service dans la [fédération d'identités Education-Recherche de production](https://federation.renater.fr/registry?action=get_all)
 
 6) Vous pouvez tester votre fournisseur de service en naviguant sur l'URL suivante : https://votre-ip/my-protected-url/
+
+#### Port 443 et certificat SSL auto-signé
+
+Le serveur apache du conteneur docker-shibboleth-renater-sp écoute sur le 433 en HTTPS mais en utilisant un [certificat SSL auto-signé](https://github.com/abes-esr/docker-shibboleth-renater-sp/blob/f07137eb54e5155f14d0e7266ee921deaf620ab8/image/httpd-vhosts.conf#L31-L36). Ce paramétrage est une contrainte de mod_shib qui a besoin que le serveur apache écoute en HTTPS et pas en HTTP.
+
+En effet, HTTP pourrait être théoriquement plus intéressant dans le cadre d'une architecture avec deux reverse proxy : un premier (RP d'entreprise) qui gère les URL publiques en HTTPS, puis un second (ce conteneur) qui gère les URL interne d'une application. Dans ce type de configuration, il est nécessaire de configurer le premier reverse proxy pour qu'il puisse accepter les certificats ssl auto-signés. Voici un exemple de configuration avec un serveur apache :
+```apache
+SSLProxyEngine on
+SSLProxyVerify none
+SSLProxyCheckPeerCN off
+SSLProxyCheckPeerName off
+SSLProxyCheckPeerExpire off
+```
 
 
 ### Démarrer l'application

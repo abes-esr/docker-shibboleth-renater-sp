@@ -55,7 +55,7 @@ services:
       RENATER_SP_HTTPD_PUBLIC_PROXY_TO_0: "http://backend-example-home:8080/"
       RENATER_SP_HTTPD_PUBLIC_PATH_1: "/api/"
       RENATER_SP_HTTPD_PUBLIC_PROXY_TO_1: "http://backend-example-api:8080/api/v1/"
-      RENATER_SP_HTTPD_PUBLIC_PATH_2: '/([0-9]{8}[0-9X]{1})\.xml'
+      RENATER_SP_HTTPD_PUBLIC_PATH_2: '^/([0-9]{8}[0-9X]{1})\.xml'
       RENATER_SP_HTTPD_PUBLIC_PROXY_TO_2: "http://backend-example-api:8080/api/v1/export/$1/xml"
       RENATER_SP_HTTPD_PROTECTED_PATH_0: "/my-protected-url/"
       RENATER_SP_HTTPD_PROTECTED_PROXY_TO_0: "http://backend-example-protected:8080/my-protected-url/"

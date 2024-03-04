@@ -43,13 +43,15 @@ set | grep -e "^RENATER_SP_" | grep -v -e "=$" | grep -v -e "='#'$"
 SEE_ALSO_LINK="Have a look to https://github.com/abes-esr/docker-shibboleth-sp/blob/main/.env-dist for values examples."
 if [ -z ${RENATER_SP_ENTITY_ID} ]; then echo "Error: RENATER_SP_ENTITY_ID is a mandatory parameter. ${SEE_ALSO_LINK}" && exit 1 ; fi
 if [ -z ${RENATER_SP_HTTPD_SERVER_NAME} ]; then echo "Error: RENATER_SP_HTTPD_SERVER_NAME is a mandatory parameter. ${SEE_ALSO_LINK}" && exit 1 ; fi
-if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_0} ]; then echo "Error: RENATER_SP_HTTPD_PUBLIC_PATH_0 is a mandatory parameter. ${SEE_ALSO_LINK}" && exit 1 ; fi
-if [ -z ${RENATER_SP_HTTPD_PUBLIC_PROXY_TO_0} ]; then echo "Error: RENATER_SP_HTTPD_PUBLIC_PROXY_TO_0 is a mandatory parameter. ${SEE_ALSO_LINK}" && exit 1 ; fi
-if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_0} ]; then echo "Error: RENATER_SP_HTTPD_PROTECTED_PATH_0 is a mandatory parameter. ${SEE_ALSO_LINK}" && exit 1 ; fi
-if [ -z ${RENATER_SP_HTTPD_PROTECTED_PROXY_TO_0} ]; then echo "Error: RENATER_SP_HTTPD_PROTECTED_PROXY_TO_0 is a mandatory parameter. ${SEE_ALSO_LINK}" && exit 1 ; fi
+if ([ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_0} ] || [ -z ${RENATER_SP_HTTPD_PUBLIC_PROXY_TO_0} ]) && ([ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_0} ] || [ -z ${RENATER_SP_HTTPD_PROTECTED_PROXY_TO_0} ])
+then
+	echo "Error: a first PUBLIC_PATH/PROXY or PROTECTED_PATH/PROXY is a mandatory parameter (RENATER_SP_HTTPD_PUBLIC_PATH_0 / RENATER_SP_HTTPD_PUBLIC_PROXY_TO_0 or RENATER_SP_HTTPD_PROTECTED_PATH_0 / RENATER_SP_HTTPD_PROTECTED_PROXY_TO_0. ${SEE_ALSO_LINK}"
+	exit 1
+fi
 
 # cleanup unused vhosts
 cp -f /usr/local/apache2/conf/extra/httpd-vhosts.conf.orig /usr/local/apache2/conf/extra/httpd-vhosts.conf
+if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_0} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_0.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_1} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_1.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_2} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_2.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_3} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_3.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
@@ -70,6 +72,7 @@ if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_17} ]; then  sed -i 's#^.*RENATER_SP_HTTP
 if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_18} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_18.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PUBLIC_PATH_19} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PUBLIC_PATH_19.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 
+if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_0} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_0.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_1} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_1.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_2} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_2.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi
 if [ -z ${RENATER_SP_HTTPD_PROTECTED_PATH_3} ]; then  sed -i 's#^.*RENATER_SP_HTTPD_PROTECTED_PATH_3.*$##g' /usr/local/apache2/conf/extra/httpd-vhosts.conf ; fi

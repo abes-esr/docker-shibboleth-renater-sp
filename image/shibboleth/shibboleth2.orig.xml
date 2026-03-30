@@ -82,7 +82,7 @@
                  (ATTENTION: ne pas activer en prod) -->
             <!-- RENATER_SP_TEST_OR_PROD=TEST BEGIN -->
             <MetadataProvider type="XML"
-              url="https://pub.federation.renater.fr/metadata/test/preview/preview-idps-test-metadata.xml"
+              url="https://pub.federation.renater.fr/metadata/test/idps.xml"
               backingFilePath="preview-idps-test-metadata.xml" reloadInterval="3600">
               <MetadataFilter type="Signature" certificate="renater-metadata-signing-cert-2016.pem"/>
             </MetadataProvider>

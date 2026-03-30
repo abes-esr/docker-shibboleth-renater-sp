@@ -108,7 +108,8 @@ Puis se rendre sur (en ignorant les certificat invalides) :
 
 ### Comment publier une nouvelle version de cette image ?
 
-Il est nécessaire d'utiliser [l'action github create-release.yml](https://github.com/abes-esr/docker-shibboleth-renater-sp/actions/workflows/create-release.yml), merci de se référer à cette procédure : https://github.com/abes-esr/abes-politique-developpement/blob/main/01-Gestion%20du%20code%20source.md#publier-une-nouvelle-release-dune-application
+Il est nécessaire d'utiliser [l'action github create-release.yml](https://github.com/abes-esr/docker-shibboleth-renater-sp/actions/workflows/create-release.yml), merci de se référer à cette procédure :  
+https://politique-informatique.abes.fr/docs/dev/development/source-code/#publier-une-nouvelle-release-dune-application
 
 ## Voir aussi
 

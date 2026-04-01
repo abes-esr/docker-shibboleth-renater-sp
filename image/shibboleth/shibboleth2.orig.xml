@@ -94,7 +94,7 @@
             -->
             <!-- RENATER_SP_TEST_OR_PROD=PROD BEGIN --><!--
             <MetadataProvider type="XML"
-              url="https://pub.federation.renater.fr/metadata/renater/main/main-idps-renater-metadata.xml"
+              url="https://pub.federation.renater.fr/metadata/fer/idps.xml"
               backingFilePath="main-idps-renater-metadata.xml" reloadInterval="3600">
               <MetadataFilter type="Signature" certificate="renater-metadata-signing-cert-2016.pem"/>
             </MetadataProvider>

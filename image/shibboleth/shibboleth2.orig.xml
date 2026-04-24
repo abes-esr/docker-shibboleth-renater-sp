@@ -84,7 +84,7 @@
             <MetadataProvider type="XML"
               url="https://pub.federation.renater.fr/metadata/test/idps.xml"
               backingFilePath="preview-idps-test-metadata.xml" reloadInterval="3600">
-              <MetadataFilter type="Signature" certificate="renater-metadata-signing-cert-2016.pem"/>
+              <MetadataFilter type="Signature" certificate="metadata-signature-2026.pem"/>
             </MetadataProvider>
             <!-- RENATER_SP_TEST_OR_PROD=TEST END -->
 
@@ -96,7 +96,7 @@
             <MetadataProvider type="XML"
               url="https://pub.federation.renater.fr/metadata/fer/idps.xml"
               backingFilePath="main-idps-renater-metadata.xml" reloadInterval="3600">
-              <MetadataFilter type="Signature" certificate="renater-metadata-signing-cert-2016.pem"/>
+              <MetadataFilter type="Signature" certificate="metadata-signature-2026.pem"/>
             </MetadataProvider>
             --><!-- RENATER_SP_TEST_OR_PROD=PROD END -->
 

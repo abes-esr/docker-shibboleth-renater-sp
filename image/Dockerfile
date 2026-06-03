@@ -16,6 +16,8 @@ RUN wget -q https://github.com/open-telemetry/opentelemetry-cpp-contrib/releases
   && cd /opt/opentelemetry-webserver-sdk \
   && ./install.sh
 
+ENV LD_LIBRARY_PATH=/opt/opentelemetry-webserver-sdk/sdk_lib/lib
+
 # ssl: for apache beeing able to listen with HTTPS (SGY 10/06/2022: WHY is it mandatory to have HTTPS ?)
 # shib: the famouse apache mod for beeing able to authenticate users thanks to shibboleth and SAML
 # proxy_http: for apache beeing able to proxy user's HTTP requests to the real application

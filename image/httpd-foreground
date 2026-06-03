@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # forward parameters to docker process (apache and shibd)
+export OTEL_SERVICE_INSTANCE_ID=${OTEL_SERVICE_INSTANCE_ID:='dev'}
 export RENATER_SP_TEST_OR_PROD=${RENATER_SP_TEST_OR_PROD:='TEST'}
 export RENATER_SP_TEST_OR_PROD=${RENATER_SP_TEST_OR_PROD^^} # force upercase: TEST or PROD
 export RENATER_SP_ENTITY_ID=${RENATER_SP_ENTITY_ID}

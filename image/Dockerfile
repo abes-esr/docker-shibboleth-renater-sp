@@ -32,19 +32,20 @@ RUN sed -i \
   -e '/LoadModule rewrite_module/a LoadModule mod_shib /usr/lib/apache2/modules/mod_shib.so' \
   -e '/LoadModule macro_module/s/^#//g' \
   -e '/LoadModule headers_module/s/^#//g' \
+  -e '/LoadModule status_module/s/^#//g' \
   -e '/httpd-vhosts.conf/s/^#//g' \
   -e '$a Include conf/extra/otel.conf' \
   /usr/local/apache2/conf/httpd.conf
 
 # apache conf and shib config
 # (templates in order to be able to customize it fro external parameters)
+COPY ./otel.conf /usr/local/apache2/conf/extra/otel.conf
 COPY ./httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf.orig
 RUN touch /usr/local/apache2/conf/extra/httpd-vhosts-begin.inc.conf
 RUN touch /usr/local/apache2/conf/extra/httpd-vhosts-end.inc.conf
 RUN touch /usr/local/apache2/conf/extra/httpd-vhosts.public_proxy.inc.conf
 RUN touch /usr/local/apache2/conf/extra/httpd-vhosts.protected_proxy.inc.conf
 COPY ./shibboleth/ /etc/shibboleth/
-COPY ./otel.conf /usr/local/apache2/conf/extra/otel.conf
 
 # redirect apache logs to docker stdout/stderr
 RUN ln -sf /proc/1/fd/1 /var/log/apache2/access.log

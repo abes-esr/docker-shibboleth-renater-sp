@@ -4,9 +4,19 @@ FROM httpd:2.4.58
 # libapache2-mod-shib: to have mod_shib for apache and the shibd daemon
 # vim: for debug
 RUN apt-get update \
-  && apt-get -y install vim apache2 libapache2-mod-shib \
+  && apt-get -y install vim apache2 libapache2-mod-shib wget curl \
   && apt-get clean \
   && apt-get -y autoremove
+
+# Installation de OpenTelemetry Web Server SDK
+ARG OTEL_VERSION="1.1.0"
+RUN wget -q https://github.com/open-telemetry/opentelemetry-cpp-contrib/releases/download/webserver%2Fv${OTEL_VERSION}/opentelemetry-webserver-sdk-x64-linux.tgz -O /tmp/otel.tgz \
+  && tar -xzf /tmp/otel.tgz -C /opt \
+  && rm /tmp/otel.tgz \
+  && cd /opt/opentelemetry-webserver-sdk \
+  && ./install.sh
+
+ENV LD_LIBRARY_PATH=/opt/opentelemetry-webserver-sdk/sdk_lib/lib
 
 # ssl: for apache beeing able to listen with HTTPS (SGY 10/06/2022: WHY is it mandatory to have HTTPS ?)
 # shib: the famouse apache mod for beeing able to authenticate users thanks to shibboleth and SAML
@@ -22,11 +32,14 @@ RUN sed -i \
   -e '/LoadModule rewrite_module/a LoadModule mod_shib /usr/lib/apache2/modules/mod_shib.so' \
   -e '/LoadModule macro_module/s/^#//g' \
   -e '/LoadModule headers_module/s/^#//g' \
+  -e '/LoadModule status_module/s/^#//g' \
   -e '/httpd-vhosts.conf/s/^#//g' \
+  -e '$a Include conf/extra/otel.conf' \
   /usr/local/apache2/conf/httpd.conf
 
 # apache conf and shib config
 # (templates in order to be able to customize it fro external parameters)
+COPY ./otel.conf /usr/local/apache2/conf/extra/otel.conf
 COPY ./httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf.orig
 RUN touch /usr/local/apache2/conf/extra/httpd-vhosts-begin.inc.conf
 RUN touch /usr/local/apache2/conf/extra/httpd-vhosts-end.inc.conf

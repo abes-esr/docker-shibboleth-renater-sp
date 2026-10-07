@@ -5,8 +5,8 @@
 version: "3.5"
 
 services:
-  shibboleth-sp:
-    container_name: shibboleth-sp
+  theses-rp:
+    container_name: theses-rp
     build: ./image/
     image: abesesr/docker-shibboleth-renater-sp:2.0.5
     ports:
@@ -63,13 +63,18 @@ services:
       RENATER_SP_HTTPD_PROTECTED_PROXY_TO_1: "http://backend-example-protected2:8080/my-protected-url2/"
       RENATER_SP_HTTPD_PROTECTED_REQUIRE_1_0: "Require shib-attr Shib-Identity-Provider https://test-idp.federation.renater.fr/idp/shibboleth"
       RENATER_SP_HTTPD_PROTECTED_REQUIRE_1_1: "Require shib-attr eppn etudiant2@test-renater.fr"
+      # Configuration OpenTelemetry
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://otel-collector:4317"
+      OTEL_SERVICE_NAME: "theses-rp"
+      OTEL_NAMESPACE: "theses"
+      OTEL_SERVICE_INSTANCE_ID: "dev"
     restart: unless-stopped
     depends_on:
       - backend-example-home
 
   # container just echoing all the HTTP headers as a JSON object
   # perfect for our shibboleth test because we need to show all the
-  # attributes populated by the reverse proxy (shibboleth-sp container)
+  # attributes populated by the reverse proxy (theses-rp container)
   # https://hub.docker.com/r/mendhak/http-https-echo
   backend-example-home:
     container_name: backend-example-home
@@ -87,3 +92,19 @@ services:
     container_name: backend-example-protected2
     image: mendhak/http-https-echo:23
     restart: unless-stopped
+
+  # Collecteur OpenTelemetry pour récupérer les métriques d'Apache et les traces OTLP
+  otel-collector:
+    container_name: otel-collector
+    image: otel/opentelemetry-collector-contrib:0.98.0
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - "4317:4317" # OTLP gRPC (réception des traces)
+      - "4318:4318" # OTLP HTTP
+      - "8888:8888" # Métriques internes du collector
+    restart: unless-stopped
+    depends_on:
+      - theses-rp
+

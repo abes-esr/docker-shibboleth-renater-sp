@@ -1,6 +1,10 @@
 #!/bin/bash
 
 # forward parameters to docker process (apache and shibd)
+export OTEL_SERVICE_INSTANCE_ID=${OTEL_SERVICE_INSTANCE_ID:='dev'}
+export OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME:='theses-rp'}
+export OTEL_NAMESPACE=${OTEL_NAMESPACE:='theses'}
+export OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT:='http://otel-collector:4317'}
 export RENATER_SP_TEST_OR_PROD=${RENATER_SP_TEST_OR_PROD:='TEST'}
 export RENATER_SP_TEST_OR_PROD=${RENATER_SP_TEST_OR_PROD^^} # force upercase: TEST or PROD
 export RENATER_SP_ENTITY_ID=${RENATER_SP_ENTITY_ID}
@@ -11,6 +15,9 @@ export RENATER_SP_HTTPD_SERVER_NAME=${RENATER_SP_HTTPD_SERVER_NAME}
 export RENATER_SP_HTTPD_LOG_LEVEL=${RENATER_SP_HTTPD_LOG_LEVEL:='info ssl:warn'}
 export RENATER_SP_HTTPD_LOG_FORMAT=${RENATER_SP_HTTPD_LOG_FORMAT:='%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"'}
 export RENATER_SP_HTTPD_PROXYPASS_DISABLEREUSE=${RENATER_SP_HTTPD_PROXYPASS_DISABLEREUSE:='on'}
+# IPs et réseaux autorisés pour l'endpoint mod_status (/server-status)
+# Par défaut : localhost (127.0.0.1, ::1) et réseaux privés RFC 1918 (incluant les réseaux Docker 172.16.0.0/12)
+export RENATER_SP_HTTPD_STATUS_ALLOWED_IPS=${RENATER_SP_HTTPD_STATUS_ALLOWED_IPS:='10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 127.0.0.1 ::1'}
 
 for i in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
 do

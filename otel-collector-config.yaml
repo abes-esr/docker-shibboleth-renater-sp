@@ -1,0 +1,38 @@
+# Configuration OpenTelemetry Collector
+# Récupération des métriques Apache (mod_status) et réception des traces OTLP
+
+receivers:
+  # Collecte des métriques Apache HTTP Server via mod_status
+  apache:
+    endpoint: "https://theses-rp:443/server-status?auto"
+    collection_interval: 10s
+    tls:
+      # Autorise le certificat auto-signé généré par Apache
+      insecure_skip_verify: true
+
+  # Réception des traces OTLP envoyées par le module mod_apache_otel
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
+
+processors:
+  batch:
+
+exporters:
+  # Export dans les logs du conteneur (stdout) pour visualiser les métriques et traces
+  debug:
+    verbosity: detailed
+
+service:
+  pipelines:
+    metrics:
+      receivers: [apache]
+      processors: [batch]
+      exporters: [debug]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
